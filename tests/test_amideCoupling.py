@@ -64,6 +64,7 @@ class AmideCouplingTest(unittest.TestCase):
         reactants = [
             ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
             ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O", "CNCCN(C)C(C)=O"]),
+            ("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O", ["OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"]*4),
         ]
 
         for amine, acid, products in reactants:
@@ -93,6 +94,7 @@ class AmideCouplingTest(unittest.TestCase):
         reactants = [
             ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
             ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O"]),
+            ("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O", ["OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"]),
         ]
 
         for amine, acid, products in reactants:
@@ -117,6 +119,7 @@ class AmideCouplingTest(unittest.TestCase):
     def test_if_get_product_returns_the_symmetric_product_if_symmetrical_as_one_is_true(self):
         reactants = [
             ("CNCCNC", "OC(C)=O", "CNCCN(C)C(C)=O"),
+            ("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O", "OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"),
         ]
 
         for amine, acid, product in reactants:
