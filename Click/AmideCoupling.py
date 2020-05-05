@@ -3,7 +3,7 @@ from rdkit.Chem import AllChem
 from . import Exceptions
 
 
-class AmideCoupling:
+class AmideCoupling():
     _smarts = ""
     _rdReaction = None
 
@@ -25,9 +25,9 @@ class AmideCoupling:
         if productSets is None:
             raise Exception("No product set was returned.")
         elif len(productSets) == 0:
-            raise Exceptions.NoProductError(f"Reaction {self.__name__} gave no product.")
+            raise Exceptions.NoProductError("Reaction {} gave no product.".format(type(self)))
         elif len(productSets) > 1:
-            raise Exceptions.AmbiguousProductErrorf(f"Reaction {self.__name__} gave more than one product sets.")
+            raise Exceptions.AmbiguousProductErrorf("Reaction {} gave more than one product sets.".format(type(self)))
 
         product = productSets[0][0]
 
@@ -35,5 +35,5 @@ class AmideCoupling:
         return product
 
 
-AmideCoupling._smarts = "[NX3H2:1].[C:2](=[OX1:3])-[OH1]>>[N:1]-[C:2](=[O:3])"
+AmideCoupling._smarts = "[$([NH3]),$([NX3H2]-[CX4]):1].[C:2](=[OX1:3])-[OH1]>>[N:1]-[C:2](=[O:3])"
 AmideCoupling._rdReaction = AllChem.ReactionFromSmarts(AmideCoupling._smarts)
