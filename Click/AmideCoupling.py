@@ -27,7 +27,7 @@ class AmideCoupling():
         elif len(productSets) == 0:
             raise Exceptions.NoProductError("Reaction {} gave no product.".format(type(self)))
         elif len(productSets) > 1:
-            raise Exceptions.AmbiguousProductErrorf("Reaction {} gave more than one product sets.".format(type(self)))
+            raise Exceptions.AmbiguousProductError("Reaction {} gave more than one product sets.".format(type(self)))
 
         product = productSets[0][0]
 

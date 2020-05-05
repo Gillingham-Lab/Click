@@ -14,6 +14,7 @@ class AmideCouplingTest(unittest.TestCase):
             ("CCN", "OC(C)=O", "O=C(C)NCC"),
             ("N", "OC(C)=O", "O=C(C)N"),
             ("CN", "OC(C1=CC=CC=C1)=O", "O=C(C1=CC=CC=C1)NC"),
+            ("NC1=CC=CC(CN)=C1", "OC(C)=O", "NC1=CC=CC(CNC(C)=O)=C1"),
 
             # Secondary amines
             ("CNC", "OC(C)=O", "O=C(C)N(C)C"),
@@ -33,10 +34,20 @@ class AmideCouplingTest(unittest.TestCase):
     # Those tests should not give any product.
     def test_no_product(self):
         reactants = [
-            # Prevent amide and acid to couple
+            # No primary amide
             ("NC(C)=O", "OC(C)=O"),
-            # Prevent anilines from coupling
+            # No secondary amide
+            ("CC(NC)=O", "OC(C)=O"),
+            # No N-methyl urea
+            ("NC(NC)=O", "OC(C)=O"),
+            # No carbamates
+            ("O=C(OC)NC", "OC(C)=O"),
+            # No imides
+            ("CC(NC(C)=O)=O", "OC(C)=O"),
+            # No aniline
             ("NC1=CC=CC=C1", "OC(C1=CC=CC=C1)=O"),
+            # No tertiary amines
+            ("CN(C)C", "OC(C)=O"),
         ]
 
         for amine, acid in reactants:
