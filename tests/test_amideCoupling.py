@@ -21,15 +21,16 @@ class AmideCouplingTest(unittest.TestCase):
         ]
 
         for amine, acid, product in reactants:
-            amine = fromSmiles(amine)
-            acid = fromSmiles(acid)
-            product = toSmiles(fromSmiles(product))
+            with self.subTest(reactants=(amine, acid, product)):
+                amine = fromSmiles(amine)
+                acid = fromSmiles(acid)
+                product = toSmiles(fromSmiles(product))
 
-            test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
-            self.assertIsNotNone(test_product)
+                test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
+                self.assertIsNotNone(test_product)
 
-            test_product_smiles = toSmiles(test_product)
-            self.assertEqual(product, test_product_smiles)
+                test_product_smiles = toSmiles(test_product)
+                self.assertEqual(product, test_product_smiles)
 
     # Those tests should not give any product.
     def test_no_product(self):
@@ -51,11 +52,41 @@ class AmideCouplingTest(unittest.TestCase):
         ]
 
         for amine, acid in reactants:
-            amine = fromSmiles(amine)
-            acid = fromSmiles(acid)
+            with self.subTest(reactants=(amine, acid)):
+                amine = fromSmiles(amine)
+                acid = fromSmiles(acid)
 
-            with self.assertRaises(Click.Exceptions.NoProductError):
-                test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
+                with self.assertRaises(Click.Exceptions.NoProductError):
+                    test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
+
+    # This reactions should give multiple possible products
+    def test_two_or_more_products(self):
+        reactants = [
+            ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
+        ]
+
+        for amine, acid, products in reactants:
+            with self.subTest(reactants=(amine, acid, products)):
+                amine = fromSmiles(amine)
+                acid = fromSmiles(acid)
+                products = [toSmiles(fromSmiles(x)) for x in products]
+
+                # getProduct only expects 1 product; must give an exception otherwise
+                with self.assertRaises(Click.Exceptions.AmbiguousProductError):
+                    test_products = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
+
+                # Use getProducts to get a list of products.
+                test_products = Click.AmideCoupling(amine=amine, acid=acid).getProducts()
+                found = 0
+
+                for p in test_products:
+                    p_smiles = toSmiles(p)
+
+                    self.assertIn(p_smiles, products)
+                    found+=1
+
+                self.assertEqual(found, len(test_products), "Not all products were expected.")
+                self.assertEqual(len(test_products), len(products), "Mismatch between expected products and actual products.")
 
 
 if __name__ == '__main__':
