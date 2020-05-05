@@ -3,6 +3,8 @@ from rdkit.Chem import MolFromSmiles as fromSmiles
 from rdkit.Chem import MolToSmiles as toSmiles
 
 import Click
+import Click.Exceptions
+
 
 class AmideCouplingTest(unittest.TestCase):
     def test_one_product(self):
@@ -22,6 +24,19 @@ class AmideCouplingTest(unittest.TestCase):
 
             test_product_smiles = toSmiles(test_product)
             self.assertEqual(product, test_product_smiles)
+
+    # Those tests should not give any product.
+    def test_no_product(self):
+        reactants = [
+            ("NC(C)=O", "OC(C)=O"),
+        ]
+
+        for amine, acid in reactants:
+            amine = fromSmiles(amine)
+            acid = fromSmiles(acid)
+
+            with self.assertRaises(Click.Exceptions.NoProductError):
+                test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
 
 
 if __name__ == '__main__':
