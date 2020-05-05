@@ -9,8 +9,10 @@ import Click.Exceptions
 class AmideCouplingTest(unittest.TestCase):
     def test_one_product(self):
         reactants = [
+            # Primary amines
             ("CN", "OC=O", "CNC=O"),
             ("CCN", "OC(C)=O", "O=C(C)NCC"),
+            ("N", "OC(C)=O", "O=C(C)N"),
             ("CN", "OC(C1=CC=CC=C1)=O", "O=C(C1=CC=CC=C1)NC"),
         ]
 
@@ -28,7 +30,10 @@ class AmideCouplingTest(unittest.TestCase):
     # Those tests should not give any product.
     def test_no_product(self):
         reactants = [
+            # Prevent amide and acid to couple
             ("NC(C)=O", "OC(C)=O"),
+            # Prevent anilines from coupling
+            ("NC1=CC=CC=C1", "OC(C1=CC=CC=C1)=O"),
         ]
 
         for amine, acid in reactants:
