@@ -1,3 +1,4 @@
+import re
 from typing import List
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
@@ -89,6 +90,28 @@ class AmideCoupling:
 
         return products[0]
 
+#[
+#    $([NH3]),
+##    $([NX3H2]-[CX4]),
+#    $([NX3H1](-[CX4])(-[CX4]))
+#:1]
 
-AmideCoupling._smarts = "[$([NH3]),$([NX3H2]-[CX4]),$([NX3H1](-[CX4])(-[CX4])):1].[C:2](=[OX1:3])-[OH1]>>[N:1]-[C:2](=[O:3])"
+AmideCoupling._smarts = re.sub(r'\s+', '', """
+    [
+        $([NX3H3]),
+        $([NX4H4]),
+        $([NX3H2]-[CX4]),
+        $([NX4H3]-[CX4]),
+        $([NX3H1](-[CX4])(-[CX4])),
+        $([NX4H2](-[CX4])(-[CX4]))
+    :1]
+
+    .
+    
+    [C:2](=[OX1:3])-[$([OX2H1]),$([O-X1])]
+    
+    >>
+    
+    [*+0:1]-[*:2](=[*:3])
+""")
 AmideCoupling._rdReaction = AllChem.ReactionFromSmarts(AmideCoupling._smarts)

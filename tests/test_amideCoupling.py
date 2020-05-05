@@ -9,15 +9,31 @@ import Click.Exceptions
 class AmideCouplingTest(unittest.TestCase):
     def test_one_product(self):
         reactants = [
-            # Primary amines
+            # Ammonia and ammonium with acetic acid
+            ("N", "OC(C)=O", "O=C(C)N"),
+            ("[NH4+]", "OC(C)=O", "O=C(C)N"),
+            ("N(-[H])(-[H])(-[H])", "OC(C)=O", "O=C(C)N"),
+
+            # Primary amines with simple acids
             ("CN", "OC=O", "CNC=O"),
             ("CCN", "OC(C)=O", "O=C(C)NCC"),
-            ("N", "OC(C)=O", "O=C(C)N"),
             ("CN", "OC(C1=CC=CC=C1)=O", "O=C(C1=CC=CC=C1)NC"),
             ("NC1=CC=CC(CN)=C1", "OC(C)=O", "NC1=CC=CC(CNC(C)=O)=C1"),
 
-            # Secondary amines
+            # Secondary amines with simple acids
             ("CNC", "OC(C)=O", "O=C(C)N(C)C"),
+
+            # Primary ammonium with simple acids
+            ("CC[NH3+]", "OC(C)=O", "O=C(C)NCC"),
+
+            # Secondary ammonium with simple acids
+            ("C[NH2+]C", "OC(C)=O", "O=C(C)N(C)C"),
+
+            # Simple amine with carboxylate
+            ("CCN", "[O-]C(C)=O", "O=C(C)NCC"),
+
+            # Secondary ammonium with carboxylate
+            ("C[NH2+]C", "[O-]C(C(C1=CC=CC=C1)(F)Cl)=O", "O=C(C(C1=CC=CC=C1)(F)Cl)N(C)C"),
         ]
 
         for amine, acid, product in reactants:
@@ -49,6 +65,8 @@ class AmideCouplingTest(unittest.TestCase):
             ("NC1=CC=CC=C1", "OC(C1=CC=CC=C1)=O"),
             # No tertiary amines
             ("CN(C)C", "OC(C)=O"),
+            # No guanosine
+            ("NC(=N)N", "OC(C)=O")
         ]
 
         for amine, acid in reactants:
