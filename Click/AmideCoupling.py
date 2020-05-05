@@ -35,5 +35,5 @@ class AmideCoupling():
         return product
 
 
-AmideCoupling._smarts = "[$([NH3]),$([NX3H2]-[CX4]):1].[C:2](=[OX1:3])-[OH1]>>[N:1]-[C:2](=[O:3])"
+AmideCoupling._smarts = "[$([NH3]),$([NX3H2]-[CX4]),$([NX3H1](-[CX4])(-[CX4])):1].[C:2](=[OX1:3])-[OH1]>>[N:1]-[C:2](=[O:3])"
 AmideCoupling._rdReaction = AllChem.ReactionFromSmarts(AmideCoupling._smarts)

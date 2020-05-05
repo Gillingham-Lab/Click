@@ -14,6 +14,9 @@ class AmideCouplingTest(unittest.TestCase):
             ("CCN", "OC(C)=O", "O=C(C)NCC"),
             ("N", "OC(C)=O", "O=C(C)N"),
             ("CN", "OC(C1=CC=CC=C1)=O", "O=C(C1=CC=CC=C1)NC"),
+
+            # Secondary amines
+            ("CNC", "OC(C)=O", "O=C(C)N(C)C"),
         ]
 
         for amine, acid, product in reactants:
