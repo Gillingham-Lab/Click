@@ -1,9 +1,21 @@
+from typing import List
 from rdkit.Chem import AllChem
+from rdkit.Chem.rdchem import Mol
 
 from . import Exceptions
 
 
-class AmideCoupling():
+class AmideCoupling:
+    """
+    Amide coupling reaction: Amine + Carboxylic acid -> Amide
+
+    Attributes
+    ----------
+    amine: rdkit.Chem.rdchem.Mol
+        The amine
+    acid: rdkit.Chem.rdchem.Mol
+        The carboxylic acid
+    """
     _smarts = ""
     _rdReaction = None
 
@@ -19,8 +31,16 @@ class AmideCoupling():
     def __runReaction__(self, amine, acid):
         return self._rdReaction.RunReactants((amine, acid))
 
-    def getProducts(self, symmetrical_as_one: bool = False):
-        """ Returns a list of all possible products. """
+    def getProducts(self, symmetrical_as_one: bool = False) -> List[Mol]:
+        """
+        Returns a list of all possible products.
+
+        Parameters
+        ----------
+        symmetrical_as_one: bool
+            Set to true to remove all but one instance of identical products.
+
+        """
         productSets = self.__runReaction__(**self.reactants)
 
         if productSets is None:
@@ -47,8 +67,18 @@ class AmideCoupling():
 
         return products
 
-    def getProduct(self, symmetrical_as_one: bool = False):
-        """ Returns and expects only one product. """
+    def getProduct(self, symmetrical_as_one: bool = False) -> Mol:
+        """
+        Returns one product and raises an exception if multiple products are possible.
+
+        Parameters
+        ----------
+        symmetrical_as_one: bool
+            Set to true to remove all but one instance of identical products.
+            This allows reactions that create two or more identical products because of symmetrical a symmetric reactant
+             to only return one product.
+
+        """
 
         # Get all possible products
         products = self.getProducts(symmetrical_as_one=symmetrical_as_one)
