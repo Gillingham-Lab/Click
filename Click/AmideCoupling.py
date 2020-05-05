@@ -19,7 +19,7 @@ class AmideCoupling():
     def __runReaction__(self, amine, acid):
         return self._rdReaction.RunReactants((amine, acid))
 
-    def getProducts(self):
+    def getProducts(self, symmetrical_as_one: bool = False):
         """ Returns a list of all possible products. """
         productSets = self.__runReaction__(**self.reactants)
 
@@ -30,19 +30,28 @@ class AmideCoupling():
 
         # Retrieve first product of all product sets
         products = []
+        productSmiles = []
         for p in productSets:
             # Sanitize product from reaction fragments.
             AllChem.SanitizeMol(p[0])
+
+            if symmetrical_as_one:
+                smiles = AllChem.MolToSmiles(p[0])
+
+                if smiles in productSmiles:
+                    continue
+                else:
+                    productSmiles.append(smiles)
 
             products.append(p[0])
 
         return products
 
-    def getProduct(self):
+    def getProduct(self, symmetrical_as_one: bool = False):
         """ Returns and expects only one product. """
 
         # Get all possible products
-        products = self.getProducts()
+        products = self.getProducts(symmetrical_as_one=symmetrical_as_one)
 
         # More than one product is unexpected, raise an error to make the user aware.
         if len(products) > 1:

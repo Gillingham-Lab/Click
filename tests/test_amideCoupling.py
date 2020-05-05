@@ -60,7 +60,7 @@ class AmideCouplingTest(unittest.TestCase):
                     test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
 
     # This reactions should give multiple possible products
-    def test_two_or_more_products(self):
+    def test_if_get_products_returns_all_possible_products(self):
         reactants = [
             ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
             ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O", "CNCCN(C)C(C)=O"]),
@@ -88,6 +88,48 @@ class AmideCouplingTest(unittest.TestCase):
 
                 self.assertEqual(found, len(test_products), "Not all products were expected.")
                 self.assertEqual(len(test_products), len(products), "Mismatch between expected products and actual products.")
+
+    def test_if_get_products_returns_only_1_products_if_symmetrical_as_one_is_true(self):
+        reactants = [
+            ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
+            ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O"]),
+        ]
+
+        for amine, acid, products in reactants:
+            with self.subTest(reactants=(amine, acid, products)):
+                amine = fromSmiles(amine)
+                acid = fromSmiles(acid)
+                products = [toSmiles(fromSmiles(x)) for x in products]
+
+                # Use getProducts to get a list of products.
+                test_products = Click.AmideCoupling(amine=amine, acid=acid).getProducts(symmetrical_as_one=True)
+                found = 0
+
+                for p in test_products:
+                    p_smiles = toSmiles(p)
+
+                    self.assertIn(p_smiles, products)
+                    found+=1
+
+                self.assertEqual(found, len(test_products), "Not all products were expected.")
+                self.assertEqual(len(test_products), len(products), "Mismatch between expected products and actual products.")
+
+    def test_if_get_product_returns_the_symmetric_product_if_symmetrical_as_one_is_true(self):
+        reactants = [
+            ("CNCCNC", "OC(C)=O", "CNCCN(C)C(C)=O"),
+        ]
+
+        for amine, acid, product in reactants:
+            with self.subTest(reactants=(amine, acid, product)):
+                amine = fromSmiles(amine)
+                acid = fromSmiles(acid)
+                product = toSmiles(fromSmiles(product))
+
+                test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct(symmetrical_as_one=True)
+                self.assertIsNotNone(test_product)
+
+                test_product_smiles = toSmiles(test_product)
+                self.assertEqual(product, test_product_smiles)
 
 
 if __name__ == '__main__':
