@@ -63,6 +63,7 @@ class AmideCouplingTest(unittest.TestCase):
     def test_two_or_more_products(self):
         reactants = [
             ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
+            ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O", "CNCCN(C)C(C)=O"]),
         ]
 
         for amine, acid, products in reactants:
