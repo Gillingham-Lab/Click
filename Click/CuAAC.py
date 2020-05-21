@@ -1,5 +1,9 @@
+import re
+from rdkit.Chem import AllChem
+from rdkit.Chem.rdchem import Mol
 
-from .Reaction import Reaction
+from .Reaction import Reaction, Reactants
+
 
 class CuAAC(Reaction):
     """
@@ -10,7 +14,32 @@ class CuAAC(Reaction):
     Attributes
     ----------
     alkyne: rdkit.Chem.rdchem.Mol
-        A terminal alkyne
+        A terminal alkyne, or an alkyne iodide.
     azide: rdkit.Chem.rdchem.Mol
         An azide
     """
+    _smarts = ""
+    _rdReaction = None
+
+    def __init__(self, alkyne: Mol, azide: Mol):
+        self.setReactants({
+            "alkyne": alkyne,
+            "azide": azide,
+        })
+
+    def __runReaction__(self, reactants: Reactants):
+        return self._rdReaction.RunReactants((reactants["alkyne"], reactants["azide"]))
+
+
+CuAAC._smarts = re.sub(r'\s+', '', """
+    [C:1]#[$([CH1]),$(C-[I]):2]
+
+    .
+
+    [$([#6]-N=[N+]=[-N]),$([#6]-[N-]-[N+]#N):3]-N~N~N
+
+    >>
+
+    [*:3]n1[c:2][c:1]nn1
+""")
+CuAAC._rdReaction = AllChem.ReactionFromSmarts(CuAAC._smarts)

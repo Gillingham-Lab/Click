@@ -1,10 +1,8 @@
 import re
-from typing import List
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 
-from . import Exceptions
-from .Reaction import Reaction
+from .Reaction import Reaction, Reactants
 
 
 class AmideCoupling(Reaction):
@@ -27,7 +25,7 @@ class AmideCoupling(Reaction):
             "acid": acid,
         })
 
-    def __runReaction__(self, reactants):
+    def __runReaction__(self, reactants: Reactants):
         return self._rdReaction.RunReactants((reactants["amine"], reactants["acid"]))
 
 
