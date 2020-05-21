@@ -16,8 +16,6 @@ class AmideCoupling(Reaction):
     acid: rdkit.Chem.rdchem.Mol
         The carboxylic acid
     """
-    _smarts = ""
-    _rdReaction = None
 
     def __init__(self, amine: Mol, acid: Mol):
         self.setReactants({

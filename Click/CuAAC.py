@@ -18,8 +18,6 @@ class CuAAC(Reaction):
     azide: rdkit.Chem.rdchem.Mol
         An azide
     """
-    _smarts = ""
-    _rdReaction = None
 
     def __init__(self, alkyne: Mol, azide: Mol):
         self.setReactants({
