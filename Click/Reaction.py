@@ -1,7 +1,9 @@
 from typing import Dict, List, Set
-
+import re
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
+from rdkit.Chem.rdChemReactions import ChemicalReaction
+from rdkit.Chem import AllChem
 
 from . import Exceptions
 
@@ -14,7 +16,9 @@ class Reaction:
     Abstract reaction class to provide common implementations for all reactions.
     """
 
-    _reactants = {}
+    _reactants: Reactants
+    _smarts: str
+    _rdReaction: ChemicalReaction
 
     def __runReaction__(self, reactants: Reactants) -> Set[Set[Mol]]:
         """
@@ -23,6 +27,17 @@ class Reaction:
         :return:
         """
         raise NotImplementedError("You must implement __runReaction__")
+
+    @classmethod
+    def setReactionSmarts(cls, smarts: str) -> None:
+        """
+        Sets a reaction smarts and creates the rdkit reaction.
+
+        :param smarts: A smarts string. All whitespace will be removed.
+        :return:
+        """
+        cls._smarts = re.sub(r'\s+', '', smarts)
+        cls._rdReaction = AllChem.ReactionFromSmarts(cls._smarts)
 
     def setReactants(self, reactants: Reactants):
         """

@@ -31,7 +31,7 @@ class CuAAC(Reaction):
         return self._rdReaction.RunReactants((reactants["alkyne"], reactants["azide"]))
 
 
-CuAAC._smarts = re.sub(r'\s+', '', """
+smarts = """
     [C:1]#[$([CH1]),$(C-[I]):2]
 
     .
@@ -41,5 +41,6 @@ CuAAC._smarts = re.sub(r'\s+', '', """
     >>
 
     [*:3]n1[c:2][c:1]nn1
-""")
-CuAAC._rdReaction = AllChem.ReactionFromSmarts(CuAAC._smarts)
+"""
+
+CuAAC.setReactionSmarts(smarts)

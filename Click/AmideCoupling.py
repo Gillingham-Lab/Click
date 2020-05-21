@@ -29,14 +29,7 @@ class AmideCoupling(Reaction):
         return self._rdReaction.RunReactants((reactants["amine"], reactants["acid"]))
 
 
-
-#[
-#    $([NH3]),
-##    $([NX3H2]-[CX4]),
-#    $([NX3H1](-[CX4])(-[CX4]))
-#:1]
-
-AmideCoupling._smarts = re.sub(r'\s+', '', """
+smarts = """
     [
         $([NX3H3]),
         $([NX4H4]),
@@ -53,5 +46,6 @@ AmideCoupling._smarts = re.sub(r'\s+', '', """
     >>
     
     [*+0:1]-[*:2](=[*:3])
-""")
-AmideCoupling._rdReaction = AllChem.ReactionFromSmarts(AmideCoupling._smarts)
+"""
+
+AmideCoupling.setReactionSmarts(smarts)
