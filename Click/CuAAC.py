@@ -1,4 +1,7 @@
-class CuAAC:
+
+from .Reaction import Reaction
+
+class CuAAC(Reaction):
     """
     Copper-catalyzed alkyne azide cycloaddition to give the 1,4 regioisomer.
 
