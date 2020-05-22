@@ -5,7 +5,7 @@ class AmideCoupling(BaseReaction):
     """
     Amide coupling reaction to form amides.
 
-    Amine + Carboxylic acid -> Amide
+    amine + carboxylic acid -> Amide
     """
 
     def __init__(self, amine: Reactant, acid: Reactant):
