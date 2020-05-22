@@ -1,2 +1,2 @@
-from .AmideCoupling import AmideCoupling
-from .CuAAC import CuAAC
+from Click.Reactions.AmideCoupling import AmideCoupling
+from Click.Reactions.CuAAC import CuAAC

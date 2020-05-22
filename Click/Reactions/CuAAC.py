@@ -2,7 +2,7 @@ import re
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 
-from .BaseReaction import BaseReaction, Reactants
+from Click.BaseReaction import BaseReaction, Reactants
 
 
 class CuAAC(BaseReaction):
