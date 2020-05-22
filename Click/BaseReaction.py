@@ -1,4 +1,4 @@
-from typing import Dict, List, Set
+from typing import Dict, List, Iterable
 import re
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
@@ -21,53 +21,53 @@ class BaseReaction:
     _smarts: str
     _rdReaction: ChemicalReaction
 
-    def __runReaction__(self, reactants: Reactants) -> Set[Set[Mol]]:
+    def __runReaction__(self, reactants: Reactants) -> List[List[Mol]]:
         """
         Returns all products of all product sets.
 
-        :return:
+        :return: A list of all product sets.
         """
         raise NotImplementedError("You must implement __runReaction__")
 
     @classmethod
-    def setReactionSmarts(cls, smarts: str) -> None:
+    def set_reaction_smarts(cls, smarts: str) -> None:
         """
-        Sets a reaction smarts and creates the rdkit reaction.
+        Sets the reaction smarts and creates the rdkit reaction from it.
 
         :param smarts: A smarts string. All whitespace will be removed.
-        :return:
         """
         cls._smarts = re.sub(r'\s+', '', smarts)
         cls._rdReaction = AllChem.ReactionFromSmarts(cls._smarts)
 
-    def setReactants(self, reactants: Reactants):
+    def set_reactants(self, reactants: Reactants):
         """
         Sets the reactants.
 
-        :param reactants:
+        :param reactants: A dictionary where each key-value pair associates a reactant name with the corresponding mol.
         :return:
+
+        Example:
+            AmideCoupling.set_reactants({"amine": amine_molecule, "acid": acid_molecule})
         """
         self._reactants = reactants
 
-    def getReactants(self) -> Reactants:
+    def get_reactants(self) -> Reactants:
         """
-        Returns the reactants as a dictionary.
+        Returns the reactants as a dictionary, where each key-value pair associates a reactant name with the
+        corresponding mol. See set_reactants.
 
         :return:
         """
         return self._reactants
 
-    def getProducts(self, symmetrical_as_one: bool = False) -> List[Mol]:
+    def get_products(self, symmetrical_as_one: bool = False) -> List[Mol]:
         """
         Returns a list of all possible products.
 
-        Parameters
-        ----------
-        symmetrical_as_one: bool
-            Set to true to remove all but one instance of identical products.
-
+        :param symmetrical_as_one: Set to true if symmetrical products should get reduced to one.
+        :return:
         """
-        productSets = self.__runReaction__(self.getReactants())
+        productSets = self.__runReaction__(self.get_reactants())
 
         if productSets is None:
             raise Exception("No product set was returned.")
@@ -93,21 +93,16 @@ class BaseReaction:
 
         return products
 
-    def getProduct(self, symmetrical_as_one: bool = False) -> Mol:
+    def get_product(self, symmetrical_as_one: bool = False) -> Mol:
         """
         Returns one product and raises an exception if multiple products are possible.
 
-        Parameters
-        ----------
-        symmetrical_as_one: bool
-            Set to true to remove all but one instance of identical products.
-            This allows reactions that create two or more identical products because of symmetrical a symmetric reactant
-             to only return one product.
-
+        :param symmetrical_as_one: Set to true to remove all but one instance of identical products.
+        :return:
         """
 
         # Get all possible products
-        products = self.getProducts(symmetrical_as_one=symmetrical_as_one)
+        products = self.get_products(symmetrical_as_one=symmetrical_as_one)
 
         # More than one product is unexpected, raise an error to make the user aware.
         if len(products) > 1:

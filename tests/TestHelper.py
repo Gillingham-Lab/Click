@@ -57,7 +57,7 @@ class ReactionTestCase(unittest.TestCase):
                 product_expected, reactants = self.prepare_testcases(case, reactant_names)
 
                 # Run the reaction
-                product = self.reaction(**reactants).getProduct(symmetrical_as_one=symmetrical_as_one)
+                product = self.reaction(**reactants).get_product(symmetrical_as_one=symmetrical_as_one)
 
                 # Test if there was any product
                 self.assertIsNotNone(product)
@@ -77,7 +77,7 @@ class ReactionTestCase(unittest.TestCase):
                 _, reactants = self.prepare_testcases(case, reactant_names, with_product=False)
 
                 with self.assertRaises(Click.Exceptions.NoProductError):
-                    test_product = self.reaction(**reactants).getProduct(symmetrical_as_one=symmetrical_as_one)
+                    test_product = self.reaction(**reactants).get_product(symmetrical_as_one=symmetrical_as_one)
 
     def _test_all_possible_products(self,
                                     tests: Sequence[MultipleProductTestCase],
@@ -91,10 +91,10 @@ class ReactionTestCase(unittest.TestCase):
 
                 # getProduct only expects 1 product - this must give an Exception
                 with self.assertRaises(Click.Exceptions.AmbiguousProductError):
-                    product = self.reaction(**reactants).getProduct()
+                    product = self.reaction(**reactants).get_product()
 
                 # getProducts should be used instead.
-                products = self.reaction(**reactants).getProducts(symmetrical_as_one=symmetrical_as_one)
+                products = self.reaction(**reactants).get_products(symmetrical_as_one=symmetrical_as_one)
 
                 products_found = 0
                 for p in products:

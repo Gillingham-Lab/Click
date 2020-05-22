@@ -3,18 +3,13 @@ from Click.BaseReaction import BaseReaction, Reactant, Reactants
 
 class AmideCoupling(BaseReaction):
     """
-    Amide coupling reaction: Amine + Carboxylic acid -> Amide
+    Amide coupling reaction to form amides.
 
-    Attributes
-    ----------
-    amine: rdkit.Chem.rdchem.Mol
-        The amine
-    acid: rdkit.Chem.rdchem.Mol
-        The carboxylic acid
+    Amine + Carboxylic acid -> Amide
     """
 
     def __init__(self, amine: Reactant, acid: Reactant):
-        self.setReactants({
+        self.set_reactants({
             "amine": amine,
             "acid": acid,
         })
@@ -42,4 +37,4 @@ smarts = """
     [*+0:1]-[*:2](=[*:3])
 """
 
-AmideCoupling.setReactionSmarts(smarts)
+AmideCoupling.set_reaction_smarts(smarts)

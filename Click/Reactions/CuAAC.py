@@ -6,17 +6,10 @@ class CuAAC(BaseReaction):
     Copper-catalyzed alkyne azide cycloaddition to give the 1,4 regioisomer.
 
     Alkyne + Azide -> 1,4-triazole
-
-    Attributes
-    ----------
-    alkyne: rdkit.Chem.rdchem.Mol
-        A terminal alkyne, or an alkyne iodide.
-    azide: rdkit.Chem.rdchem.Mol
-        An azide
     """
 
     def __init__(self, alkyne: Reactant, azide: Reactant):
-        self.setReactants({
+        self.set_reactants({
             "alkyne": alkyne,
             "azide": azide,
         })
@@ -37,4 +30,4 @@ smarts = """
     [*:3]n1[c:2][c:1]nn1
 """
 
-CuAAC.setReactionSmarts(smarts)
+CuAAC.set_reaction_smarts(smarts)
