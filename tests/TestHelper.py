@@ -5,7 +5,7 @@ from typing import Sequence, Tuple, Union, Type
 
 import Click
 import Click.Exceptions
-import Click.Reaction
+import Click.BaseReaction
 
 Reactants = Sequence[str]
 ReactantNames = Sequence[str]

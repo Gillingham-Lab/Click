@@ -2,10 +2,10 @@ import re
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 
-from .Reaction import Reaction, Reactants
+from .BaseReaction import BaseReaction, Reactants
 
 
-class CuAAC(Reaction):
+class CuAAC(BaseReaction):
     """
     Copper-catalyzed alkyne azide cycloaddition to give the 1,4 regioisomer.
 

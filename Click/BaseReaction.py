@@ -11,7 +11,7 @@ from . import Exceptions
 Reactants = Dict[str, Mol]
 
 
-class Reaction:
+class BaseReaction:
     """
     Abstract reaction class to provide common implementations for all reactions.
     """

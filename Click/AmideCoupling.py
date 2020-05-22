@@ -2,10 +2,10 @@ import re
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 
-from .Reaction import Reaction, Reactants
+from .BaseReaction import BaseReaction, Reactants
 
 
-class AmideCoupling(Reaction):
+class AmideCoupling(BaseReaction):
     """
     Amide coupling reaction: Amine + Carboxylic acid -> Amide
 
