@@ -88,7 +88,3 @@ class AmideCouplingTest(TestHelper.ReactionTestCase):
         ]
 
         self._test_one_product(reactants, self.reactant_names, symmetrical_as_one=True)
-
-
-if __name__ == '__main__':
-    unittest.main()
