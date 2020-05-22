@@ -25,6 +25,7 @@ class CuAACTest(TestHelper.ReactionTestCase):
             ("CC#CC", "C-N=[N+]=[N-]"),
             ("CC#Cc1ccccc1", "C-N=[N+]=[N-]"),
             ("c1ccccc1C#Cc1ccccc1", "C-N=[N+]=[N-]"),
+            ("C1CCCC#CCC1", "C-N=[N+]=[N-]"),
         ]
 
         self._test_no_product(reactants, self.reactant_names)
