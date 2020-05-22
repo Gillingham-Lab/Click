@@ -36,6 +36,9 @@ class SulfonAmideFormationTest(TestHelper.ReactionTestCase):
             (("C1=CC=CN1", "Cl[S+2]([O-])([O-])CC"), "c1cccn1[S+2]([O-])([O-])CC"),
             (("C12=CC=CC=C1NC=C2", "Cl[S+2]([O-])([O-])CC"), "c12ccccc1n([S+2]([O-])([O-])CC)cc2"),
             (("c1ccc2[nH]ccc2c1", "Cl[S+2]([O-])([O-])CC"), "c12ccccc1n([S+2]([O-])([O-])CC)cc2"),
+
+            # Special test: This is a standard sulfon amide directly from ChemDraw. The tests should be able to digest this.
+            (("CN", "ClS(CC)(=O)=O"), "CN[S+2]([O-])([O-])CC"),
         ]
 
         self._test_one_product(reactants, self.reactant_names)
