@@ -1,52 +1,43 @@
-import unittest
-from rdkit.Chem import MolFromSmiles as fromSmiles
-from rdkit.Chem import MolToSmiles as toSmiles
-
 import Click
-import Click.Exceptions
+from tests import TestHelper
 
 
-class AmideCouplingTest(unittest.TestCase):
+class AmideCouplingTest(TestHelper.ReactionTestCase):
+    reactant_names = ["amine", "acid"]
+
+    def setUp(self):
+        self.set_reaction(Click.AmideCoupling)
+
     def test_one_product(self):
         reactants = [
             # Ammonia and ammonium with acetic acid
-            ("N", "OC(C)=O", "O=C(C)N"),
-            ("[NH4+]", "OC(C)=O", "O=C(C)N"),
-            ("N(-[H])(-[H])(-[H])", "OC(C)=O", "O=C(C)N"),
+            (("N", "OC(C)=O"), "O=C(C)N"),
+            (("[NH4+]", "OC(C)=O"), "O=C(C)N"),
+            (("N(-[H])(-[H])(-[H])", "OC(C)=O"), "O=C(C)N"),
 
             # Primary amines with simple acids
-            ("CN", "OC=O", "CNC=O"),
-            ("CCN", "OC(C)=O", "O=C(C)NCC"),
-            ("CN", "OC(C1=CC=CC=C1)=O", "O=C(C1=CC=CC=C1)NC"),
-            ("NC1=CC=CC(CN)=C1", "OC(C)=O", "NC1=CC=CC(CNC(C)=O)=C1"),
+            (("CN", "OC=O"), "CNC=O"),
+            (("CCN", "OC(C)=O"), "O=C(C)NCC"),
+            (("CN", "OC(C1=CC=CC=C1)=O"), "O=C(C1=CC=CC=C1)NC"),
+            (("NC1=CC=CC(CN)=C1", "OC(C)=O"), "NC1=CC=CC(CNC(C)=O)=C1"),
 
             # Secondary amines with simple acids
-            ("CNC", "OC(C)=O", "O=C(C)N(C)C"),
+            (("CNC", "OC(C)=O"), "O=C(C)N(C)C"),
 
             # Primary ammonium with simple acids
-            ("CC[NH3+]", "OC(C)=O", "O=C(C)NCC"),
+            (("CC[NH3+]", "OC(C)=O"), "O=C(C)NCC"),
 
             # Secondary ammonium with simple acids
-            ("C[NH2+]C", "OC(C)=O", "O=C(C)N(C)C"),
+            (("C[NH2+]C", "OC(C)=O"), "O=C(C)N(C)C"),
 
             # Simple amine with carboxylate
-            ("CCN", "[O-]C(C)=O", "O=C(C)NCC"),
+            (("CCN", "[O-]C(C)=O"), "O=C(C)NCC"),
 
             # Secondary ammonium with carboxylate
-            ("C[NH2+]C", "[O-]C(C(C1=CC=CC=C1)(F)Cl)=O", "O=C(C(C1=CC=CC=C1)(F)Cl)N(C)C"),
+            (("C[NH2+]C", "[O-]C(C(C1=CC=CC=C1)(F)Cl)=O"), "O=C(C(C1=CC=CC=C1)(F)Cl)N(C)C"),
         ]
 
-        for amine, acid, product in reactants:
-            with self.subTest(reactants=(amine, acid, product)):
-                amine = fromSmiles(amine)
-                acid = fromSmiles(acid)
-                product = toSmiles(fromSmiles(product))
-
-                test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
-                self.assertIsNotNone(test_product)
-
-                test_product_smiles = toSmiles(test_product)
-                self.assertEqual(product, test_product_smiles)
+        self._test_one_product(reactants, self.reactant_names)
 
     # Those tests should not give any product.
     def test_no_product(self):
@@ -69,88 +60,34 @@ class AmideCouplingTest(unittest.TestCase):
             ("NC(=N)N", "OC(C)=O")
         ]
 
-        for amine, acid in reactants:
-            with self.subTest(reactants=(amine, acid)):
-                amine = fromSmiles(amine)
-                acid = fromSmiles(acid)
-
-                with self.assertRaises(Click.Exceptions.NoProductError):
-                    test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
+        self._test_no_product(reactants, self.reactant_names)
 
     # This reactions should give multiple possible products
     def test_if_get_products_returns_all_possible_products(self):
         reactants = [
-            ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
-            ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O", "CNCCN(C)C(C)=O"]),
-            ("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O", ["OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"]*4),
+            (("NCCNC", "OC(C)=O"), ("CNCCNC(C)=O", "NCCN(C(C)=O)C")),
+            (("CNCCNC", "OC(C)=O"), ("CNCCN(C)C(C)=O", "CNCCN(C)C(C)=O")),
+            (("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O"), ["OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"]*4),
         ]
 
-        for amine, acid, products in reactants:
-            with self.subTest(reactants=(amine, acid, products)):
-                amine = fromSmiles(amine)
-                acid = fromSmiles(acid)
-                products = [toSmiles(fromSmiles(x)) for x in products]
-
-                # getProduct only expects 1 product; must give an exception otherwise
-                with self.assertRaises(Click.Exceptions.AmbiguousProductError):
-                    test_products = Click.AmideCoupling(amine=amine, acid=acid).getProduct()
-
-                # Use getProducts to get a list of products.
-                test_products = Click.AmideCoupling(amine=amine, acid=acid).getProducts()
-                found = 0
-
-                for p in test_products:
-                    p_smiles = toSmiles(p)
-
-                    self.assertIn(p_smiles, products)
-                    found+=1
-
-                self.assertEqual(found, len(test_products), "Not all products were expected.")
-                self.assertEqual(len(test_products), len(products), "Mismatch between expected products and actual products.")
+        self._test_all_possible_products(reactants, self.reactant_names)
 
     def test_if_get_products_returns_only_1_products_if_symmetrical_as_one_is_true(self):
         reactants = [
-            ("NCCNC", "OC(C)=O", ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
-            ("CNCCNC", "OC(C)=O", ["CNCCN(C)C(C)=O"]),
-            ("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O", ["OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"]),
+            (("NCCNC", "OC(C)=O"), ["CNCCNC(C)=O", "NCCN(C(C)=O)C"]),
+            (("CNCCNC", "OC(C)=O"), ["CNCCN(C)C(C)=O"]),
+            (("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O"), ["OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"]),
         ]
 
-        for amine, acid, products in reactants:
-            with self.subTest(reactants=(amine, acid, products)):
-                amine = fromSmiles(amine)
-                acid = fromSmiles(acid)
-                products = [toSmiles(fromSmiles(x)) for x in products]
-
-                # Use getProducts to get a list of products.
-                test_products = Click.AmideCoupling(amine=amine, acid=acid).getProducts(symmetrical_as_one=True)
-                found = 0
-
-                for p in test_products:
-                    p_smiles = toSmiles(p)
-
-                    self.assertIn(p_smiles, products)
-                    found+=1
-
-                self.assertEqual(found, len(test_products), "Not all products were expected.")
-                self.assertEqual(len(test_products), len(products), "Mismatch between expected products and actual products.")
+        self._test_all_possible_products(reactants, self.reactant_names, symmetrical_as_one=True)
 
     def test_if_get_product_returns_the_symmetric_product_if_symmetrical_as_one_is_true(self):
         reactants = [
-            ("CNCCNC", "OC(C)=O", "CNCCN(C)C(C)=O"),
-            ("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O", "OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"),
+            (("CNCCNC", "OC(C)=O"), "CNCCN(C)C(C)=O"),
+            (("N", "OC(CN(CC(O)=O)CCN(CC(O)=O)CC(O)=O)=O"), "OC(CN(CC(O)=O)CCN(CC(N)=O)CC(O)=O)=O"),
         ]
 
-        for amine, acid, product in reactants:
-            with self.subTest(reactants=(amine, acid, product)):
-                amine = fromSmiles(amine)
-                acid = fromSmiles(acid)
-                product = toSmiles(fromSmiles(product))
-
-                test_product = Click.AmideCoupling(amine=amine, acid=acid).getProduct(symmetrical_as_one=True)
-                self.assertIsNotNone(test_product)
-
-                test_product_smiles = toSmiles(test_product)
-                self.assertEqual(product, test_product_smiles)
+        self._test_one_product(reactants, self.reactant_names, symmetrical_as_one=True)
 
 
 if __name__ == '__main__':
