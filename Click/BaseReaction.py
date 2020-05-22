@@ -1,5 +1,6 @@
 from typing import Dict, List, Iterable
 import re
+from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.rdchem import Mol
 from rdkit.Chem.rdChemReactions import ChemicalReaction
@@ -106,6 +107,6 @@ class BaseReaction:
 
         # More than one product is unexpected, raise an error to make the user aware.
         if len(products) > 1:
-            raise Exceptions.AmbiguousProductError("Reaction {} gave more than one product sets.".format(type(self)))
+            raise Exceptions.AmbiguousProductError("Reaction {} gave more than one product sets: {}".format(type(self), [Chem.MolToSmiles(x) for x in products]))
 
         return products[0]
