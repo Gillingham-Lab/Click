@@ -1,8 +1,4 @@
-import re
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
-
-from Click.BaseReaction import BaseReaction, Reactants
+from Click.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class AmideCoupling(BaseReaction):
@@ -17,7 +13,7 @@ class AmideCoupling(BaseReaction):
         The carboxylic acid
     """
 
-    def __init__(self, amine: Mol, acid: Mol):
+    def __init__(self, amine: Reactant, acid: Reactant):
         self.setReactants({
             "amine": amine,
             "acid": acid,

@@ -8,7 +8,8 @@ from rdkit.Chem import AllChem
 from . import Exceptions
 
 
-Reactants = Dict[str, Mol]
+Reactant = Mol
+Reactants = Dict[str, Reactant]
 
 
 class BaseReaction:

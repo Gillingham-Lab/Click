@@ -1,8 +1,4 @@
-import re
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
-
-from Click.BaseReaction import BaseReaction, Reactants
+from Click.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class CuAAC(BaseReaction):
@@ -19,7 +15,7 @@ class CuAAC(BaseReaction):
         An azide
     """
 
-    def __init__(self, alkyne: Mol, azide: Mol):
+    def __init__(self, alkyne: Reactant, azide: Reactant):
         self.setReactants({
             "alkyne": alkyne,
             "azide": azide,
