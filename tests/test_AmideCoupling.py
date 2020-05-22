@@ -35,6 +35,20 @@ class AmideCouplingTest(TestHelper.ReactionTestCase):
 
             # Secondary ammonium with carboxylate
             (("C[NH2+]C", "[O-]C(C(C1=CC=CC=C1)(F)Cl)=O"), "O=C(C(C1=CC=CC=C1)(F)Cl)N(C)C"),
+
+            #
+            # Amine with active esters
+            #
+
+            # N-Hydroxysuccinimide
+            (("CCN", "CCC(ON1C(CCC1=O)=O)=O"), "CCC(NCC)=O"),
+            # N-Sulfo-Hydroxysuccinimide
+            (("CCN", "CCC(ON1C(CC(S(=O)(O)=O)C1=O)=O)=O"), "CCC(NCC)=O"),
+            # p-Nitrophenol
+            (("CCN", "CCC(OC1=CC=C([N+]([O-])=O)C=C1)=O"), "CCC(NCC)=O"),
+            # Pentafluorophenyl
+            (("CCN", "CCC(OC1=C(F)C(F)=C(F)C(F)=C1F)=O"), "CCC(NCC)=O"),
+
         ]
 
         self._test_one_product(reactants, self.reactant_names)
