@@ -32,6 +32,15 @@ class FmocRemovalTest(TestHelper.ReactionTestCase):
 
             # Benzyl
             ("CNCC1=CC=CC=C1", ),
+
+            # Dimethylamine
+            ("CNC",),
+
+            # O-Methylcarbamates
+            ("CN(C(OC)=O)C", ),
+
+            # Ureas
+            ("CN(C(NC)=O)C", ),
         ]
 
         self._test_no_product(reactants, self.reactant_names)
