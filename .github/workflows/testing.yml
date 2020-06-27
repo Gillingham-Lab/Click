@@ -34,7 +34,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          conda install rdkit=${{ rdkit }} -c rdkit
+          conda install rdkit=${{ matrix.rdkit }} -c rdkit
           pip install flake8
         
       - name: Lint with flake8
