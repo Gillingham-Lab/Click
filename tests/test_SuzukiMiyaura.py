@@ -2,7 +2,7 @@ from Click.Reactions import SuzukiMiyaura
 from tests import TestHelper
 
 
-class SulfonAmideFormationTest(TestHelper.ReactionTestCase):
+class SuzukiMiyauraTest(TestHelper.ReactionTestCase):
     reactant_names = ["boronate", "halogenide"]
 
     def setUp(self):
