@@ -1,0 +1,49 @@
+# This is a basic workflow to help you get started with Actions
+
+name: testing
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Test on ${{ matrix.os }} with python version ${{ matrix.python_version }}
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        python_version: [3.6, 3.7]
+        os: [ubuntu-latest, windows-latest]
+        rdkit: ["^2019.03", "^2020.03", "*"]
+     
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          update-conda: true
+          python-version: ${{ matrix.python_version }}
+          conda-channels: anaconda, conda-forge, rdkit
+      - run: conda --version
+      - run: which python
+      
+      - name: Install dependencies
+        run: |
+          conda install rdkit=${{ rdkit }} -c rdkit
+          pip install flake8
+        
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Test with unittest
+        run: |
+          python -m unittest discover -s tests
