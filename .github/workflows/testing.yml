@@ -19,7 +19,7 @@ jobs:
       matrix:
         python_version: [3.6, 3.7]
         os: [ubuntu-latest, windows-latest]
-        rdkit: ["2019.03.*", "2020.03.*", "*"]
+        rdkit: ["2019.03.*", "*"]
      
     steps:
       - uses: actions/checkout@v2
@@ -34,6 +34,7 @@ jobs:
       
       - name: Install dependencies
         run: |
+          conda install -c anaconda py-boost
           conda install rdkit=${{ matrix.rdkit }} -c rdkit
           pip install flake8
         
