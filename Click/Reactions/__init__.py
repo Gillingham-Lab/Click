@@ -8,3 +8,4 @@ from Click.Reactions.SuzukiMiyaura import SuzukiMiyaura
 # Protecting group removals
 from Click.Reactions.FmocRemoval import FmocRemoval
 from Click.Reactions.BocRemoval import BocRemoval
+from Click.Reactions.AlkalineEsterHydrolysis import AlkalineEsterHydrolysis

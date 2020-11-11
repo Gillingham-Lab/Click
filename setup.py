@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ClickReaction", # Replace with your own username
-    version="0.1.0",
+    version="0.1.1",
     author="Basilius Sauter",
     author_email="basilius.sauter@gmail.com",
-    description="A collection of chemical reaction formulations for use with rdkit.",
+    description="A collection of chemical reaction formulations for use with rdkit. Requires rdkit.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Gillingham-Lab/Click",
@@ -24,7 +24,4 @@ setuptools.setup(
         "Topic :: Utilities",
     ],
     python_requires='>=3.6',
-    install_requires=[
-        "rdkit",
-    ]
 )
