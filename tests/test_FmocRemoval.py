@@ -1,4 +1,4 @@
-from Click.Reactions import FmocRemoval
+from ClickReaction.Reactions import FmocRemoval
 from tests import TestHelper
 
 

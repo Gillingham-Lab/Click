@@ -1,4 +1,4 @@
-from Click.BaseReaction import BaseReaction, Reactant, Reactants
+from ClickReaction.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class BocRemoval(BaseReaction):
@@ -7,6 +7,8 @@ class BocRemoval(BaseReaction):
 
     amine-boc -> amine
     """
+
+    reactant_names = ["bocamine"]
 
     def __init__(self, bocamine: Reactant):
         self.set_reactants({

@@ -1,4 +1,4 @@
-from Click.BaseReaction import BaseReaction, Reactant, Reactants
+from ClickReaction.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class AmideCoupling(BaseReaction):
@@ -7,6 +7,8 @@ class AmideCoupling(BaseReaction):
 
     amine + carboxylic acid -> Amide
     """
+
+    reactant_names = ["amine", "acid"]
 
     def __init__(self, amine: Reactant, acid: Reactant):
         self.set_reactants({

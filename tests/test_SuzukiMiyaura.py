@@ -1,4 +1,4 @@
-from Click.Reactions import SuzukiMiyaura
+from ClickReaction.Reactions import SuzukiMiyaura
 from tests import TestHelper
 
 

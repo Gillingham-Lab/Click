@@ -1,10 +1,15 @@
 from typing import Dict, List, Iterable
 import re
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem.rdchem import Mol
-from rdkit.Chem.rdChemReactions import ChemicalReaction
-from rdkit.Chem import AllChem
+
+try:
+    from rdkit import Chem
+    from rdkit.Chem import AllChem
+    from rdkit.Chem.rdchem import Mol
+    from rdkit.Chem.rdChemReactions import ChemicalReaction
+    from rdkit.Chem import AllChem
+except ModuleNotFoundError:
+    print("This module requires rdkit to run.")
+    exit(-1)
 
 from . import Exceptions
 
@@ -21,6 +26,8 @@ class BaseReaction:
     _reactants: Reactants
     _smarts: str
     _rdReaction: ChemicalReaction
+
+    reactant_names = List[str]
 
     def __runReaction__(self, reactants: Reactants) -> List[List[Mol]]:
         """

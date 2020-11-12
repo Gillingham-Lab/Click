@@ -1,0 +1,38 @@
+# This workflows will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Upload Python Package with conda and twine.
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup conda
+      uses: s-weigand/setup-conda@v1
+      with:
+        update-conda: true
+        python-version: 3.6
+        conda-channels: anaconda, conda-forge, rdkit
+    - run: conda --version
+    - run: which python
+      
+    - name: Install dependencies
+      run: |
+        conda install -c rdkit rdkit
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+    - name: Build and publish
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/*

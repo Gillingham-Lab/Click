@@ -1,4 +1,4 @@
-from Click.BaseReaction import BaseReaction, Reactant, Reactants
+from ClickReaction.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class SulfonAmideFormation(BaseReaction):
@@ -7,6 +7,8 @@ class SulfonAmideFormation(BaseReaction):
 
     amine + sulfonylhalogenide -> sulfonamide
     """
+
+    reactant_names = ["amine", "sulfonylhalogenide"]
 
     def __init__(self, amine: Reactant, sulfonylhalogenide: Reactant):
         self.set_reactants({

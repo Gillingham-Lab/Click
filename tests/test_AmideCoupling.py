@@ -1,4 +1,4 @@
-import Click
+import ClickReaction
 from tests import TestHelper
 
 
@@ -6,7 +6,7 @@ class AmideCouplingTest(TestHelper.ReactionTestCase):
     reactant_names = ["amine", "acid"]
 
     def setUp(self):
-        self.set_reaction(Click.AmideCoupling)
+        self.set_reaction(ClickReaction.AmideCoupling)
 
     def test_one_product(self):
         reactants = [

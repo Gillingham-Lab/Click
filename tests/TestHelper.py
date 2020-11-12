@@ -3,9 +3,9 @@ from rdkit.Chem import MolFromSmiles as fromSmiles
 from rdkit.Chem import MolToSmiles as toSmiles
 from typing import Sequence, Tuple, Union, Type
 
-import Click
-import Click.Exceptions
-import Click.BaseReaction
+import ClickReaction
+import ClickReaction.Exceptions
+import ClickReaction.BaseReaction
 
 Reactants = Sequence[str]
 ReactantNames = Sequence[str]
@@ -76,7 +76,7 @@ class ReactionTestCase(unittest.TestCase):
             with self.subTest(case=case):
                 _, reactants = self.prepare_testcases(case, reactant_names, with_product=False)
 
-                with self.assertRaises(Click.Exceptions.NoProductError):
+                with self.assertRaises(ClickReaction.Exceptions.NoProductError):
                     test_product = self.reaction(**reactants).get_product(symmetrical_as_one=symmetrical_as_one)
 
     def _test_all_possible_products(self,
@@ -90,7 +90,7 @@ class ReactionTestCase(unittest.TestCase):
                 products_expected, reactants = self.prepare_testcases(case, reactant_names)
 
                 # getProduct only expects 1 product - this must give an Exception
-                with self.assertRaises(Click.Exceptions.AmbiguousProductError):
+                with self.assertRaises(ClickReaction.Exceptions.AmbiguousProductError):
                     product = self.reaction(**reactants).get_product()
 
                 # getProducts should be used instead.

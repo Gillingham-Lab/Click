@@ -1,4 +1,4 @@
-from Click.Reactions import AlkalineEsterHydrolysis
+from ClickReaction.Reactions import AlkalineEsterHydrolysis
 from tests import TestHelper
 
 

@@ -1,4 +1,4 @@
-from Click.BaseReaction import BaseReaction, Reactant, Reactants
+from ClickReaction.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class CuAAC(BaseReaction):
@@ -7,6 +7,8 @@ class CuAAC(BaseReaction):
 
     alkyne + azide -> 1,4-triazole
     """
+
+    reactant_names = ["alkyne", "azide"]
 
     def __init__(self, alkyne: Reactant, azide: Reactant):
         self.set_reactants({

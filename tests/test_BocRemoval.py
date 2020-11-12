@@ -1,4 +1,4 @@
-from Click.Reactions import BocRemoval
+from ClickReaction.Reactions import BocRemoval
 from tests import TestHelper
 
 
