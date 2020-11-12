@@ -8,6 +8,8 @@ class AmideCoupling(BaseReaction):
     amine + carboxylic acid -> Amide
     """
 
+    reactant_names = ["amine", "acid"]
+
     def __init__(self, amine: Reactant, acid: Reactant):
         self.set_reactants({
             "amine": amine,

@@ -8,6 +8,8 @@ class SulfonAmideFormation(BaseReaction):
     amine + sulfonylhalogenide -> sulfonamide
     """
 
+    reactant_names = ["amine", "sulfonylhalogenide"]
+
     def __init__(self, amine: Reactant, sulfonylhalogenide: Reactant):
         self.set_reactants({
             "amine": amine,

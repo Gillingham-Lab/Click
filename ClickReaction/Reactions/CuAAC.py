@@ -8,6 +8,8 @@ class CuAAC(BaseReaction):
     alkyne + azide -> 1,4-triazole
     """
 
+    reactant_names = ["alkyne", "azide"]
+
     def __init__(self, alkyne: Reactant, azide: Reactant):
         self.set_reactants({
             "alkyne": alkyne,

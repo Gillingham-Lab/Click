@@ -8,6 +8,8 @@ class FmocRemoval(BaseReaction):
     amine-fmoc -> amine
     """
 
+    reactant_names = ["fmocamine"]
+
     def __init__(self, fmocamine: Reactant):
         self.set_reactants({
             "fmocamine": fmocamine,

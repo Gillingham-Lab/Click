@@ -27,6 +27,8 @@ class BaseReaction:
     _smarts: str
     _rdReaction: ChemicalReaction
 
+    reactant_names = List[str]
+
     def __runReaction__(self, reactants: Reactants) -> List[List[Mol]]:
         """
         Returns all products of all product sets.

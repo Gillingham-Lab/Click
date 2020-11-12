@@ -10,6 +10,8 @@ class SuzukiMiyaura(BaseReaction):
     trifluoroborates + arylhalogenide -> C-C bond formation
     """
 
+    reactant_names = ["boronate", "halogenide"]
+
     def __init__(self, boronate: Reactant, halogenide: Reactant):
         self.set_reactants({
             "boronate": boronate,

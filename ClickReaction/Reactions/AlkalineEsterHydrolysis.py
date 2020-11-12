@@ -16,6 +16,8 @@ class AlkalineEsterHydrolysis(BaseReaction):
     amine-boc -> amine
     """
 
+    reactant_names = ["ester"]
+
     def __init__(self, ester: Reactant):
         self.set_reactants({
             "ester": ester,

@@ -8,6 +8,8 @@ class BocRemoval(BaseReaction):
     amine-boc -> amine
     """
 
+    reactant_names = ["bocamine"]
+
     def __init__(self, bocamine: Reactant):
         self.set_reactants({
             "bocamine": bocamine,
