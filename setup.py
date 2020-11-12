@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="ClickReaction", # Replace with your own username
+    name="ClickReaction",
     version="0.3.0",
     author="Basilius Sauter",
     author_email="basilius.sauter@gmail.com",
