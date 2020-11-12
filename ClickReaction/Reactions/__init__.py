@@ -9,3 +9,14 @@ from ClickReaction.Reactions.SuzukiMiyaura import SuzukiMiyaura
 from ClickReaction.Reactions.FmocRemoval import FmocRemoval
 from ClickReaction.Reactions.BocRemoval import BocRemoval
 from ClickReaction.Reactions.AlkalineEsterHydrolysis import AlkalineEsterHydrolysis
+
+# All reactions as a dictionary.
+all_reactions = {
+    "AmideCoupling": AmideCoupling,
+    "CuAAC": CuAAC,
+    "SulfonAmideFormation": SulfonAmideFormation,
+    "SuzukiMiyaura": SuzukiMiyaura,
+    "FmocRemoval": FmocRemoval,
+    "BocRemoval": BocRemoval,
+    "AlkalineEsterHydrolysis": AlkalineEsterHydrolysis,
+}
