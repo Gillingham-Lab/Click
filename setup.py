@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ClickReaction", # Replace with your own username
-    version="0.2.0",
+    version="0.3.0",
     author="Basilius Sauter",
     author_email="basilius.sauter@gmail.com",
     description="A collection of chemical reaction formulations for use with rdkit. Requires rdkit.",
