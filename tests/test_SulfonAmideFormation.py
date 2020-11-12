@@ -1,4 +1,4 @@
-from Click.Reactions import SulfonAmideFormation
+from ClickReaction.Reactions import SulfonAmideFormation
 from tests import TestHelper
 
 

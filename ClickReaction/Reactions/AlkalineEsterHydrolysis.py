@@ -1,4 +1,4 @@
-from Click.BaseReaction import BaseReaction, Reactant, Reactants
+from ClickReaction.BaseReaction import BaseReaction, Reactant, Reactants
 
 
 class AlkalineEsterHydrolysis(BaseReaction):

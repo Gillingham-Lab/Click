@@ -1,7 +1,7 @@
 
 class ClickException(Exception):
     """
-    Base exception for the Click package.he
+    Base exception for the ClickReaction package.he
     """
     pass
 

@@ -1,4 +1,4 @@
-import Click
+import ClickReaction
 from tests import TestHelper
 
 
@@ -6,7 +6,7 @@ class CuAACTest(TestHelper.ReactionTestCase):
     reactant_names = ["alkyne", "azide"]
 
     def setUp(self):
-        self.set_reaction(Click.CuAAC)
+        self.set_reaction(ClickReaction.CuAAC)
 
     def test_one_product(self):
         reactants = [
