@@ -58,7 +58,7 @@ assert "Cn1cc(-c2ccccc2)nn1" == Chem.MolToSmiles(product)
 
 ### Bimolecular reactions
 
-* Amide coupling
+* Amide coupling (with or without anilines)
 * CuAAC
 * Sulfon amide formation from amines and sulfonyl chlorides
 * Suzuki-Miyaura cross coupling

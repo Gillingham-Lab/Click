@@ -1,4 +1,5 @@
 from ClickReaction.Reactions.AmideCoupling import AmideCoupling
+from ClickReaction.Reactions.AmideCouplingWithAnilines import AmideCouplingWithAnilines
 from ClickReaction.Reactions.CuAAC import CuAAC
 from ClickReaction.Reactions.SulfonAmideFormation import SulfonAmideFormation
 
@@ -13,6 +14,7 @@ from ClickReaction.Reactions.AlkalineEsterHydrolysis import AlkalineEsterHydroly
 # All reactions as a dictionary.
 all_reactions = {
     "AmideCoupling": AmideCoupling,
+    "AmideCouplingWithAnilines": AmideCouplingWithAnilines,
     "CuAAC": CuAAC,
     "SulfonAmideFormation": SulfonAmideFormation,
     "SuzukiMiyaura": SuzukiMiyaura,

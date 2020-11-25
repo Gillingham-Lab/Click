@@ -1,11 +1,9 @@
 from ClickReaction.BaseReaction import BaseReaction, Reactant, Reactants
 
 
-class AmideCoupling(BaseReaction):
+class AmideCouplingWithAnilines(BaseReaction):
     """
-    Amide coupling reaction to form amides.
-
-    Does not work with anilines.
+    Amide coupling reaction to form amides, does also include anilines.
 
     amine + carboxylic acid -> Amide
     """
@@ -29,7 +27,13 @@ smarts = """
         $([NX3H2]-[CX4]),
         $([NX4H3]-[CX4]),
         $([NX3H1](-[CX4])(-[CX4])),
-        $([NX4H2](-[CX4])(-[CX4]))
+        $([NX4H2](-[CX4])(-[CX4])),
+        $([NX3H2]-[cX3]),
+        $([NX4H3]-[cX3]),
+        $([NX3H1](-[cX3])(-[CX4])),
+        $([NX4H2](-[cX3])(-[CX4])),
+        $([NX3H1](-[cX3])(-[cx3])),
+        $([NX4H2](-[cX3])(-[cx3]))
     :1]
 
     .
@@ -49,4 +53,4 @@ smarts = """
     [*+0:1]-[*:2](=[*:3])
 """
 
-AmideCoupling.set_reaction_smarts(smarts)
+AmideCouplingWithAnilines.set_reaction_smarts(smarts)
