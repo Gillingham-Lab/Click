@@ -1,4 +1,4 @@
-from typing import Dict, List, Iterable
+from typing import ClassVar, Dict, List, Iterable
 import re
 
 try:
@@ -23,11 +23,14 @@ class BaseReaction:
     Abstract reaction class to provide common implementations for all reactions.
     """
 
+    """ Dictionary of reactants """
     _reactants: Reactants
-    _smarts: str
-    _rdReaction: ChemicalReaction
+    """ Smarts used by the implementing class"""
+    _smarts: ClassVar[str]
+    """ rdkit ChemicalReaction instance created from the smarts. """
+    _rdReaction: ClassVar[ChemicalReaction]
 
-    reactant_names = List[str]
+    reactant_names = ClassVar[List[str]]
 
     def __runReaction__(self, reactants: Reactants) -> List[List[Mol]]:
         """
